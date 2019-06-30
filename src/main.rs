@@ -11,6 +11,8 @@ use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
 
 mod errors;
+mod invitation_handler;
+mod invitation_routes;
 mod models;
 mod schema;
 
@@ -47,7 +49,10 @@ fn main() -> std::io::Result<()> {
                     // routes for authentication
                     .service(web::resource("/auth").route(web::get().to(|| {})))
                     // routes to invitation
-                    .service(web::resource("/invitation").route(web::get().to(|| {})))
+                    .service(
+                        web::resource("/invitation")
+                            .route(web::post().to_async(invitation_routes::register_email)),
+                    )
                     // routes to register as a user after the
                     .service(
                         web::resource("/register/{invitation_id}").route(web::get().to(|| {})),
