@@ -10,7 +10,9 @@ use actix_web::{web, App, HttpServer};
 use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
 
+mod errors;
 mod models;
+mod schema;
 
 use crate::models::DbExecutor;
 
