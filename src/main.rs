@@ -11,6 +11,8 @@ use actix_web::{web, App, HttpServer};
 use chrono::Duration;
 use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
+mod auth_handler;
+mod auth_routes;
 mod email_service;
 mod errors;
 mod invitation_handler;
@@ -64,7 +66,12 @@ fn main() -> std::io::Result<()> {
             .service(
                 web::scope("/api")
                     // routes for authentication
-                    .service(web::resource("/auth").route(web::get().to(|| {})))
+                    .service(
+                        web::resource("/auth")
+                            .route(web::post().to_async(auth_routes::login))
+                            .route(web::delete().to(auth_routes::logout))
+                            .route(web::get().to_async(auth_routes::get_me)),
+                    )
                     // routes to invitation
                     .service(
                         web::resource("/invitation")
