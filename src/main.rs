@@ -10,11 +10,15 @@ use actix_web::{web, App, HttpServer};
 use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
 
+mod email_service;
 mod errors;
 mod invitation_handler;
 mod invitation_routes;
 mod models;
+mod register_handler;
+mod register_routes;
 mod schema;
+mod utils;
 
 use crate::models::DbExecutor;
 
@@ -55,7 +59,8 @@ fn main() -> std::io::Result<()> {
                     )
                     // routes to register as a user after the
                     .service(
-                        web::resource("/register/{invitation_id}").route(web::get().to(|| {})),
+                        web::resource("/register/{invitation_id}")
+                            .route(web::post().to_async(register_routes::register_user)),
                     ),
             )
     })

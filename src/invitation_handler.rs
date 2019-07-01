@@ -1,4 +1,5 @@
 // invitation_handler.rs
+use crate::email_service::send_invitation;
 use actix::{Handler, Message};
 use chrono::{Duration, Local};
 use diesel::{self, prelude::*};
@@ -33,6 +34,8 @@ impl Handler<CreateInvitation> for DbExecutor {
         let inserted_invitation = diesel::insert_into(invitations)
             .values(&new_invitation)
             .get_result(conn)?;
+
+        send_invitation(&new_invitation); // moved from routes ejs
 
         Ok(inserted_invitation)
     }

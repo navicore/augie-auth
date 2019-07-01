@@ -1,0 +1,10 @@
+http://localhost:3000
+-ks
+-v
+Content-Type: application/json; charset=utf-8
+
+--
+--
+POST /api/register/a5610ec9-7ea5-4add-9d41-0347998f9550
+{"password":"secret"}
+

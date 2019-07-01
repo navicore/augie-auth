@@ -16,7 +16,7 @@ pub fn register_email(
         .from_err()
         .and_then(|db_response| match db_response {
             Ok(invitation) => {
-                // send_invitation(&invitation); // this will become handy later on to send email
+                // send_invitation(&invitation);
                 dbg!(invitation); // to print data to terminal
                 Ok(HttpResponse::Ok().into())
             }
