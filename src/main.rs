@@ -5,11 +5,12 @@ extern crate diesel;
 #[macro_use]
 extern crate serde_derive;
 use actix::prelude::*;
+use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::middleware::Logger;
 use actix_web::{web, App, HttpServer};
+use chrono::Duration;
 use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
-
 mod email_service;
 mod errors;
 mod invitation_handler;
@@ -42,12 +43,24 @@ fn main() -> std::io::Result<()> {
     let address: Addr<DbExecutor> = SyncArbiter::start(4, move || DbExecutor(pool.clone()));
 
     HttpServer::new(move || {
+        // secret is a random minimum 32 bytes long base 64 string
+        let secret: String = std::env::var("SECRET_KEY").unwrap_or_else(|_| "0123".repeat(8));
+        let domain: String = std::env::var("DOMAIN").unwrap_or_else(|_| "localhost".to_string());
+
         App::new()
             // add database pool as data/state to the app
             .data(address.clone())
             // setup logger for requests
             .wrap(Logger::default())
             // everything under '/api/' route
+            .wrap(IdentityService::new(
+                CookieIdentityPolicy::new(secret.as_bytes())
+                    .name("auth")
+                    .path("/")
+                    .domain(domain.as_str())
+                    .max_age_time(Duration::days(1))
+                    .secure(false), // this can only be true if you have https
+            ))
             .service(
                 web::scope("/api")
                     // routes for authentication
