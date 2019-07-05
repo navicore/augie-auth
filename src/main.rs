@@ -4,6 +4,7 @@ extern crate diesel;
 #[macro_use]
 extern crate serde_derive;
 use actix::prelude::*;
+use actix_files as fs;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::middleware::Logger;
 use actix_web::{web, App, HttpServer};
@@ -82,6 +83,8 @@ fn main() -> std::io::Result<()> {
                             .route(web::post().to_async(register_routes::register_user)),
                     ),
             )
+            // serve static files
+            .service(fs::Files::new("/", "./static/").index_file("index.html"))
     })
     .bind("0.0.0.0:3000")?
     .start();

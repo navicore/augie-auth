@@ -11,8 +11,10 @@ pub fn send_invitation(invitation: &Invitation) {
     let tm = Transmission::new(get_api_key());
     let sending_email =
         std::env::var("SENDING_EMAIL_ADDRESS").expect("SENDING_EMAIL_ADDRESS must be set");
+    let host_url = std::env::var("HOST_URL").expect("HOST_URL must be set");
+
     // new email message with sender name and email
-    let mut email = Message::new(EmailAddress::new(sending_email, "Let's Organise"));
+    let mut email = Message::new(EmailAddress::new(sending_email, "Verify for Augie-Auth"));
 
     let options = Options {
         open_tracking: false,
@@ -28,9 +30,10 @@ pub fn send_invitation(invitation: &Invitation) {
 
     let email_body = format!(
         "Please click on the link below to complete registration. <br/>
-         <a href=\"http://localhost:3000/register.html?id={}&email={}\">
-         http://localhost:3000/register</a> <br>
-         your Invitation expires on <strong>{}</strong>",
+         <a href=\"{0}/register.html?id={1}&email={2}\">
+         {0}/register</a> <br>
+         your Invitation expires on <strong>{3}</strong>",
+        host_url,
         invitation.id,
         invitation.email,
         invitation
@@ -43,7 +46,7 @@ pub fn send_invitation(invitation: &Invitation) {
     email
         .add_recipient(recipient)
         .options(options)
-        .subject("You have been invited to join Simple-Auth-Server Rust")
+        .subject("You have been invited to register for Augie-Auth")
         .html(email_body);
 
     let result = tm.send(&email);

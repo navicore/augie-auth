@@ -15,6 +15,7 @@ pub fn register_email(
             Ok(invitation) => {
                 dbg!(invitation);
                 Ok(HttpResponse::Ok().into())
+                //Ok(HttpResponse::Ok().json(invitation))
             }
             Err(err) => Ok(err.error_response()),
         })

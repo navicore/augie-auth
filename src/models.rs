@@ -50,3 +50,10 @@ impl From<User> for SlimUser {
         SlimUser { email: user.email }
     }
 }
+impl From<Invitation> for SlimUser {
+    fn from(invitation: Invitation) -> Self {
+        SlimUser {
+            email: invitation.email,
+        }
+    }
+}
