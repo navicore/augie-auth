@@ -1,4 +1,3 @@
-// register_routes.rs
 use actix::Addr;
 use actix_web::{web, Error, HttpResponse, ResponseError};
 use futures::Future;

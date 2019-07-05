@@ -1,4 +1,3 @@
-// main.rs
 #![allow(dead_code)] // usful in dev mode
 #[macro_use]
 extern crate diesel;

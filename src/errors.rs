@@ -1,4 +1,3 @@
-// errors.rs
 use actix_web::{error::ResponseError, HttpResponse};
 use derive_more::Display;
 use diesel::result::{DatabaseErrorKind, Error as DBError};
@@ -17,7 +16,6 @@ pub enum ServiceError {
     Unauthorized,
 }
 
-// impl ResponseError trait allows to convert our errors into http responses with appropriate data
 impl ResponseError for ServiceError {
     fn error_response(&self) -> HttpResponse {
         match *self {

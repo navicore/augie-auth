@@ -1,4 +1,3 @@
-// register_handler.rs
 use actix::{Handler, Message};
 use chrono::Local;
 use diesel::prelude::*;

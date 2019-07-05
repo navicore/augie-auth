@@ -1,4 +1,3 @@
-// auth_routes.rs
 use actix::Addr;
 use actix_identity::Identity;
 use actix_web::{web, Error, HttpResponse, Responder, ResponseError};

@@ -1,4 +1,5 @@
-http://localhost:3000
+#http://localhost:3000
+https://auth.augie.io
 -ks
 -v
 Content-Type: application/json; charset=utf-8

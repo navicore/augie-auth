@@ -1,4 +1,3 @@
-// email_service.rs
 use crate::models::Invitation;
 use sparkpost::transmission::{
     EmailAddress, Message, Options, Recipient, Transmission, TransmissionResponse,

@@ -1,4 +1,3 @@
-//utils.rs
 use bcrypt::{hash, DEFAULT_COST};
 use chrono::{Duration, Local};
 use jsonwebtoken::{decode, encode, Header, Validation};
@@ -35,11 +34,11 @@ struct Claim {
 impl Claim {
     fn with_email(email: &str) -> Self {
         Claim {
-            iss: "localhost".into(),
+            iss: "localhost".into(), // ejs todo
             sub: "auth".into(),
             email: email.to_owned(),
             iat: Local::now().timestamp(),
-            exp: (Local::now() + Duration::hours(24)).timestamp(),
+            exp: (Local::now() + Duration::hours(24)).timestamp(), // ejs todo
         }
     }
 }

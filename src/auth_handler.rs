@@ -1,4 +1,3 @@
-//auth_handler.rs
 use actix::{Handler, Message};
 use actix_identity::Identity;
 use actix_web::FromRequest;

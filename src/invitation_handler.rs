@@ -1,4 +1,3 @@
-// invitation_handler.rs
 use crate::email_service::send_invitation;
 use actix::{Handler, Message};
 use chrono::{Duration, Local};
