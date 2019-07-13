@@ -7,6 +7,27 @@ use uuid::Uuid;
 use crate::errors::ServiceError;
 use crate::models::{DbExecutor, Invitation};
 
+use actix::Addr;
+use actix_web::{web, Error, HttpResponse, ResponseError};
+use futures::future::Future;
+
+use crate::models::SlimUser;
+
+pub fn register_email(
+    signup_invitation: web::Json<CreateInvitation>,
+    db: web::Data<Addr<DbExecutor>>,
+) -> impl Future<Item = HttpResponse, Error = Error> {
+    db.send(signup_invitation.into_inner())
+        .from_err()
+        .and_then(|db_response| match db_response {
+            Ok(invitation) => {
+                dbg!(&invitation);
+                Ok(HttpResponse::Ok().json(SlimUser::from(invitation)))
+            }
+            Err(err) => Ok(err.error_response()),
+        })
+}
+
 #[derive(Deserialize)]
 pub struct CreateInvitation {
     pub email: String,
