@@ -12,7 +12,6 @@ use chrono::Duration;
 use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
 mod auth_handler;
-mod auth_routes;
 mod email_service;
 mod errors;
 mod invitation_handler;
@@ -68,9 +67,9 @@ fn main() -> std::io::Result<()> {
                     // routes for authentication
                     .service(
                         web::resource("/auth")
-                            .route(web::post().to_async(auth_routes::login))
-                            .route(web::delete().to(auth_routes::logout))
-                            .route(web::get().to_async(auth_routes::get_me)),
+                            .route(web::post().to_async(auth_handler::login))
+                            .route(web::delete().to(auth_handler::logout))
+                            .route(web::get().to_async(auth_handler::get_me)),
                     )
                     // routes to invitation
                     .service(
