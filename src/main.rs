@@ -12,14 +12,11 @@ use chrono::Duration;
 use diesel::{r2d2::ConnectionManager, PgConnection};
 use dotenv::dotenv;
 mod auth_handler;
-mod auth_routes;
 mod email_service;
 mod errors;
 mod invitation_handler;
-mod invitation_routes;
 mod models;
 mod register_handler;
-mod register_routes;
 mod schema;
 mod utils;
 
@@ -68,19 +65,19 @@ fn main() -> std::io::Result<()> {
                     // routes for authentication
                     .service(
                         web::resource("/auth")
-                            .route(web::post().to_async(auth_routes::login))
-                            .route(web::delete().to(auth_routes::logout))
-                            .route(web::get().to_async(auth_routes::get_me)),
+                            .route(web::post().to_async(auth_handler::login))
+                            .route(web::delete().to(auth_handler::logout))
+                            .route(web::get().to_async(auth_handler::get_me)),
                     )
                     // routes to invitation
                     .service(
                         web::resource("/invitation")
-                            .route(web::post().to_async(invitation_routes::register_email)),
+                            .route(web::post().to_async(invitation_handler::register_email)),
                     )
                     // routes to register as a user after the
                     .service(
                         web::resource("/register/{invitation_id}")
-                            .route(web::post().to_async(register_routes::register_user)),
+                            .route(web::post().to_async(register_handler::register_user)),
                     ),
             )
             // serve static files
