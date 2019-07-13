@@ -3,7 +3,7 @@
 Augie Auth
 ======================
 
-A POC of a Rust Auth Server that Hands our JWTs and Service Account Credentials.
+A POC of a Rust auth server that generates JWTs and Service Account Credentials.
 
 Learning project gratefully bootstrapped from [this terriric tutorial](https://gill.net.in/posts/auth-microservice-rust-actix-web1.0-diesel-complete-tutorial://gill.net.in/posts/auth-microservice-rust-actix-web1.0-diesel-complete-tutorial/).
 
