@@ -4,6 +4,7 @@ use futures::future::Future;
 
 use crate::invitation_handler::CreateInvitation;
 use crate::models::DbExecutor;
+use crate::models::SlimUser;
 
 pub fn register_email(
     signup_invitation: web::Json<CreateInvitation>,
@@ -13,9 +14,8 @@ pub fn register_email(
         .from_err()
         .and_then(|db_response| match db_response {
             Ok(invitation) => {
-                dbg!(invitation);
-                Ok(HttpResponse::Ok().into())
-                //Ok(HttpResponse::Ok().json(invitation))
+                dbg!(&invitation);
+                Ok(HttpResponse::Ok().json(SlimUser::from(invitation)))
             }
             Err(err) => Ok(err.error_response()),
         })
