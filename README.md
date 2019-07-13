@@ -17,5 +17,7 @@ Learning project gratefully bootstrapped from [this terriric tutorial](https://g
 ```console
 docker run -p 5432:5432--name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 
+echo "DATABASE_URL=postgres://postgres:mysecretpassword@192.168.0.46/augie_auth" >> .env
+
 diesel setup
 ```
