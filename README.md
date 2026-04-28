@@ -1,3 +1,8 @@
+<!-- ghmig:moved -->
+> **This repository has moved to [https://git.navicore.tech/navicore/augie-auth](https://git.navicore.tech/navicore/augie-auth).**
+>
+> The GitHub copy is archived and no longer maintained.
+
 [![Build Status](https://travis-ci.org/navicore/augie-auth.svg?branch=master)](https://travis-ci.org/navicore/augie-auth)
 
 Augie Auth
